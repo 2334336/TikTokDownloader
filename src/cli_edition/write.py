@@ -33,8 +33,12 @@ class Write:
                     }
                 )
 
-    def txt_inquire(self) -> str:
-        if path := self.console.input(_("请输入文本文档路径：")):
+    # 修改后的 src/cli_edition/write.py 中的代码
+    def txt_inquire(self, command=None) -> str:
+        default_path = "./douyin/douyin.txt"
+        path = command.pop() if command else default_path
+        
+        if path:
             if (t := Path(path.replace('"', ""))).is_file():
                 try:
                     with t.open("r", encoding=self.settings.encode) as f:
