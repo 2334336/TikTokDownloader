@@ -1744,17 +1744,19 @@ class TikTok:
             await self._deal_user_data([i for i in users if i])
 
     def txt_inquire(self) -> str:
-        if path := self.console.input(_("请输入文本文档路径：")):
-            if (t := Path(path.replace('"', ""))).is_file():
-                try:
-                    with t.open("r", encoding=self.ENCODE) as f:
-                        return f.read()
-                except UnicodeEncodeError as e:
-                    self.logger.warning(
-                        _("{path} 文件读取异常: {error}").format(path=path, error=e)
-                    )
-            else:
-                self.console.print(_("{path} 文件不存在！").format(path=path))
+        # 直接使用指定路径
+        path = "./douyin/douyin.txt"
+        t = Path(path.replace('"', ""))
+        if t.is_file():
+            try:
+                with t.open("r", encoding=self.ENCODE) as f:
+                    return f.read()
+            except UnicodeEncodeError as e:
+                self.logger.warning(
+                    _("{path} 文件读取异常: {error}").format(path=path, error=e)
+                )
+        else:
+            self.console.print(_("{path} 文件不存在！").format(path=path))
         return ""
 
     async def user_txt(
